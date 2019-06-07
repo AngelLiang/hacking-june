@@ -9,6 +9,11 @@ from .models import Account, cache
 
 
 class require_role(object):
+    """
+    角色类装饰器
+    """
+
+    # 角色权限等级
     roles = {
         'spam': 0,
         'new': 1,
@@ -39,6 +44,7 @@ class require_role(object):
             if g.user.role == 'spam':
                 flash(_('You are a spammer'), 'error')
                 return redirect('/')
+            # 判断角色权限
             if self.roles[g.user.role] < self.roles[self.role]:
                 return abort(403)
             return method(*args, **kwargs)
@@ -64,6 +70,10 @@ class limit_request(object):
     it accepts the same parameters as the wrapped methods.
     """
 
+    """
+    请求限制器
+    """
+
     def __init__(self, seconds=0, prefix=None, method='POST',
                  redirect_url=None):
         self.seconds = seconds
@@ -72,6 +82,9 @@ class limit_request(object):
         self.redirect_url = redirect_url
 
     def __call__(self, method):
+        """
+        :param method: 方法，其实就是一个被装饰的函数
+        """
         @functools.wraps(method)
         def wrapper(*args, **kwargs):
             if request.method != self.method:
@@ -87,6 +100,7 @@ class limit_request(object):
             key = '%s-%s-%i' % (prefix, self.method, g.user.id)
 
             now = time.time()
+            # cache: flask.ext.cache
             last_cached = cache.get(key)
             if last_cached and (now - last_cached) < self.seconds:
                 flash(_('Too many requests in a time'), 'warn')
@@ -100,6 +114,7 @@ class limit_request(object):
 
 
 def get_current_user():
+    # session: flask.session
     if 'id' in session and 'token' in session:
         user = Account.query.get(int(session['id']))
         if not user:
@@ -111,6 +126,10 @@ def get_current_user():
 
 
 def login_user(user, permanent=False):
+    """
+    :param user:
+    :param permanent: bool, 记住我功能？
+    """
     if not user:
         return None
     session['id'] = user.id
@@ -128,14 +147,22 @@ def logout_user():
 
 
 def create_auth_token(user):
+    """
+    :param user:
+    """
     timestamp = int(time.time())
     secret = current_app.secret_key
     token = '%s%s%s%s' % (secret, timestamp, user.id, user.token)
-    hsh = hashlib.sha1(token).hexdigest()
+    hsh = hashlib.sha1(token).hexdigest()  # 生成hash进行加签
+    # token没有加密，只是进行了base64
     return base64.b32encode('%s|%s|%s' % (timestamp, user.id, hsh))
 
 
 def verify_auth_token(token, expires=30):
+    """
+    :param token: str
+    :param expires: int, 过期时间
+    """
     try:
         token = base64.b32decode(token)
     except:
@@ -157,6 +184,7 @@ def verify_auth_token(token, expires=30):
     user = Account.query.get(user_id)
     if not user:
         return None
+    # 验签
     secret = current_app.secret_key
     _hsh = hashlib.sha1('%s%s%s%s' % (secret, timestamp, user_id, user.token))
     if hsh == _hsh.hexdigest():
