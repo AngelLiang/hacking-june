@@ -1,0 +1,23 @@
+{
+  "name": "jquery",
+  "version": "3.3.1",
+  "description": "jQuery component",
+  "license": "MIT",
+  "keywords": [
+    "jquery",
+    "component"
+  ],
+  "main": "jquery.js",
+  "scripts": [
+    "jquery.js",
+    "jquery.min.js",
+    "jquery.slim.js",
+    "jquery.slim.min.js"
+  ],
+  "files": [
+    "jquery.min.map",
+    "jquery.slim.min.map"
+  ],
+  "repository": "components/jquery",
+  "resolved": "459648cda77875519c5da3ae1dd0ed5d170aa649"
+}

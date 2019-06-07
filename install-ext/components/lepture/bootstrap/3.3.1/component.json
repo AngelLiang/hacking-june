@@ -1,0 +1,26 @@
+{
+  "name": "bootstrap",
+  "description": "Bootstrap for component.",
+  "version": "3.3.1",
+  "keywords": [],
+  "dependencies": {
+    "components/jquery": "*"
+  },
+  "development": {},
+  "scripts": [
+    "index.js"
+  ],
+  "styles": [
+    "bootstrap.css",
+    "yue.css"
+  ],
+  "fonts": [
+    "fonts/glyphicons-halflings-regular.eot",
+    "fonts/glyphicons-halflings-regular.svg",
+    "fonts/glyphicons-halflings-regular.ttf",
+    "fonts/glyphicons-halflings-regular.woff"
+  ],
+  "license": "MIT",
+  "repository": "lepture/bootstrap",
+  "resolved": "2d76cd4831453da6ab8a9cdd8b587cd5b98c8572"
+}

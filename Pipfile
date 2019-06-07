@@ -1,0 +1,30 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "==0.10"
+flask-babel = "*"
+flask-cache = "*"
+flask-mail = "*"
+flask-sqlalchemy = "*"
+flask-script = "*"
+flask-wtf = "==0.9.3"
+pygments = "*"
+alembic = "*"
+gunicorn = "*"
+livereload = "*"
+nose = "*"
+coverage = "*"
+sphinx = "*"
+flake8 = "*"
+e1839a8 = {editable = true,path = "."}
+june = {editable = true,path = "."}
+speaklater = "*"
+misaka = "==1.0.2"
+
+[requires]
+python_version = "2.7"
