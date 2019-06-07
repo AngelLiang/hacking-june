@@ -10,6 +10,7 @@
 
 import re
 import datetime
+# misaka: Microsoft Visual C++ 9.0 is required. Get it from http://aka.ms/vcpython27
 import misaka as m
 from markupsafe import escape
 from pygments import highlight
