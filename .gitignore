@@ -30,4 +30,5 @@ assets/index.css
 etc/settings.py
 
 .vscode
+.env
 assets/package-lock.json
