@@ -10,6 +10,7 @@ from ..models import Account
 
 
 class require_role(object):
+    """这个类和 june/helpers 中的 require_role 一样"""
     roles = {
         'spam': 0,
         'new': 1,
@@ -89,6 +90,10 @@ def create_auth_token(user):
 
 
 def verify_auth_token(token, expires=30):
+    """
+    :param token:
+    :param expires: int, 过期时间
+    """
     try:
         token = base64.b32decode(token)
     except:

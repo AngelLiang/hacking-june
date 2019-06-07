@@ -1,4 +1,18 @@
 # coding: utf-8
+"""
+主要函数::
+
+    :func:`signup`
+    :func:`signin`
+    :func:`signout`
+    :func:`setting`
+    :func:`find`
+    :func:`reset`
+    :func:`delete`
+    :func:`notification`
+
+"""
+
 
 from flask import Blueprint
 from flask import g, request, flash, current_app
