@@ -9,13 +9,14 @@ __all__ = ('Account', 'NonAccount')
 
 
 class Account(db.Model, SessionMixin):
+    """帐号"""
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), unique=True, index=True,
                          nullable=False)
     email = db.Column(db.String(200), nullable=False, unique=True, index=True)
     password = db.Column(db.String(100), nullable=False)
 
-    screen_name = db.Column(db.String(80))
+    screen_name = db.Column(db.String(80))  # 显示名称
     description = db.Column(db.String(400))
     city = db.Column(db.String(200))
     website = db.Column(db.String(400))
@@ -51,6 +52,7 @@ class Account(db.Model, SessionMixin):
         return '<Account: %s>' % self.username
 
     def avatar(self, size=48):
+        """头像"""
         md5email = hashlib.md5(self.email).hexdigest()
         query = "%s?s=%s%s" % (md5email, size, db.app.config['GRAVATAR_EXTRA'])
         return db.app.config['GRAVATAR_BASE_URL'] + query

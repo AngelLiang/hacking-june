@@ -31,6 +31,7 @@ class JuneQuery(BaseQuery):
 
 
 class SessionMixin(object):
+    """应该是ModelMixin"""
     def to_dict(self, *columns):
         dct = {}
         for col in columns:
