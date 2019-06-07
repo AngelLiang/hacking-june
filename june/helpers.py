@@ -97,18 +97,22 @@ class limit_request(object):
             if prefix is None:
                 prefix = request.path
 
+            # cache key，应该使用英文冒号分隔
             key = '%s-%s-%i' % (prefix, self.method, g.user.id)
 
             now = time.time()
             # cache: flask.ext.cache
-            last_cached = cache.get(key)
+            last_cached = cache.get(key)  # 获取缓存
+            # 缓存命中并且没有超时
             if last_cached and (now - last_cached) < self.seconds:
                 flash(_('Too many requests in a time'), 'warn')
+                # URL重定向
                 redirect_url = self.redirect_url or request.url
                 if callable(redirect_url):
                     redirect_url = redirect_url(*args, **kwargs)
                 return redirect(redirect_url)
-            cache.set(key, now)
+            # 设置缓存，应该也要设置缓存超时时间
+            cache.set(key, now)  
             return method(*args, **kwargs)
         return wrapper
 
