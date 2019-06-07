@@ -17,7 +17,7 @@ __all__ = [
     'FindForm', 'ResetForm',
 ]
 
-
+# 保留的关键词
 RESERVED_WORDS = [
     'root', 'admin', 'bot', 'robot', 'master', 'webmaster',
     'account', 'people', 'user', 'users', 'project', 'projects',
@@ -33,6 +33,7 @@ RESERVED_WORDS = [
 
 
 class SignupForm(BaseForm):
+    """注册表单"""
     username = TextField(
         _('Username'), validators=[
             DataRequired(), Length(min=3, max=20),
@@ -48,10 +49,14 @@ class SignupForm(BaseForm):
 
     def validate_username(self, field):
         data = field.data.lower()
+
+        # 检查用户名是否是关键词
         if data in RESERVED_WORDS:
             raise ValueError(_('This name is a reserved name.'))
+        # 检查用户名是否是关键词，从配置中获取
         if data in current_app.config.get('RESERVED_WORDS', []):
             raise ValueError(_('This name is a reserved name.'))
+        # 检查帐号是否存在，使用了 count() 方法
         if Account.query.filter_by(username=data).count():
             raise ValueError(_('This name has been registered.'))
 
@@ -68,6 +73,7 @@ class SignupForm(BaseForm):
 
 
 class SigninForm(BaseForm):
+    """登录表单"""
     account = TextField(
         _('Account'),
         validators=[DataRequired(), Length(min=3, max=200)],
@@ -81,8 +87,10 @@ class SigninForm(BaseForm):
     def validate_password(self, field):
         account = self.account.data
         if '@' in account:
+            # 邮箱
             user = Account.query.filter_by(email=account).first()
         else:
+            # 用户名
             user = Account.query.filter_by(username=account).first()
 
         if not user:
