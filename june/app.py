@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding=utf-8
 
 import os
 import time
@@ -89,9 +90,11 @@ def register_jinja(app):
         if app.testing:
             return filename
 
+        # 从缓存中读取
         if filename in app._static_hash:
             return app._static_hash[filename]
 
+        # 生成文件的hash值
         with open(os.path.join(app.static_folder, filename), 'r') as f:
             content = f.read()
             hsh = hashlib.md5(content).hexdigest()
@@ -99,7 +102,7 @@ def register_jinja(app):
         app.logger.info('Generate %s md5sum: %s' % (filename, hsh))
         prefix = app.config.get('SITE_STATIC_PREFIX', '/static/')
         value = '%s%s?v=%s' % (prefix, filename, hsh[:5])
-        app._static_hash[filename] = value
+        app._static_hash[filename] = value  # 设置缓存
         return value
 
     @app.context_processor
