@@ -7,6 +7,10 @@ __all__ = ['Node', 'NodeStatus']
 
 
 class Node(db.Model, SessionMixin):
+    """节点
+
+    缺少节点的父子关联关系
+    """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     urlname = db.Column(db.String(40), unique=True, index=True)
@@ -38,7 +42,10 @@ class Node(db.Model, SessionMixin):
 class NodeStatus(db.Model, SessionMixin):
     """
     People's status in a Node
+
+    节点和帐号的关联表
     """
+
     node_id = db.Column(db.Integer, primary_key=True)
     account_id = db.Column(db.Integer, primary_key=True)
 

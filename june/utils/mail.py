@@ -14,6 +14,7 @@ def send_mail(app, msg):
 
 
 def signup_mail(user, path=None):
+    """邮箱注册"""
     config = current_app.config
     msg = Message(
         _("Signup for %(site)s", site=config['SITE_TITLE']),

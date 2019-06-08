@@ -78,6 +78,7 @@ class Topic(db.Model):
         return self
 
     def move(self, node=None):
+        """移动节点"""
         if self.node_id == node.id:
             return self
 
@@ -113,6 +114,7 @@ class Topic(db.Model):
         return self
 
     def delete(self, user=None, node=None):
+        """删除节点"""
         if not user:
             user = Account.query.get(self.account_id)
         if not node:
